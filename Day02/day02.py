@@ -10,9 +10,17 @@ with open('Day02/testdata.txt', 'r') as file:
     
 def issafe(report) -> bool:
     # calculate the differences between each element in the list
+
+    #def getnextvalue(report):
+
+
     diffs = []
     for i in range(len(report)-1):
-        diffs.append(report[i] - report[i+1])
+        diff = report[i] - report[i+1]
+        #diff2 = report[i] - report[i+2]
+        #sign = diff > 0
+
+        diffs.append(diff)
     #print(diffs)
 
     # check they're all the same sign
@@ -29,7 +37,7 @@ def issafe(report) -> bool:
         if abs(diff) < 1:
             safetybreaches += 1
 
-    if safetybreaches > 1:
+    if safetybreaches > 0:
         return False
     
     return True
