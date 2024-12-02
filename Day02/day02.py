@@ -1,18 +1,16 @@
 # Open the file in read mode
+
 reports = []
-with open('Day02/testdata.txt', 'r') as file:
+with open('Day02/fulldata.txt', 'r') as file:
     # Read each line from the file
     
     for line in file:
         report = [int(num) for num in line.split()]
-        print(report)
+        #print(report)
         reports.append(report)
     
+
 def issafe(report) -> bool:
-    # calculate the differences between each element in the list
-
-    #def getnextvalue(report):
-
 
     diffs = []
     for i in range(len(report)-1):
@@ -37,15 +35,40 @@ def issafe(report) -> bool:
         if abs(diff) < 1:
             safetybreaches += 1
 
-    if safetybreaches > 0:
-        return False
+    if safetybreaches == 0:
+        return True    
     
-    return True
+    return False
+
+def issafedampened(report) -> bool:
+
+    for i in range(len(report)):
+        
+        report2 = report[0:i]
+        report2.extend(report[i+1:])
+        #print(report, report2)
+        if issafe(report2):
+            return True
+        
+
+    return False
 
 def countsafereports(reports) -> int:
     safereports = 0
+    unsafereports = []
     for report in reports:
-        safereports += 1 if issafe(report) else 0
+        result = issafe(report)
+        if result == False:
+            unsafereports.append(report)
+
+        safereports += 1 if result else 0
+        #print(result, safereports)
+
+    for unsaferport in unsafereports:
+        result = issafedampened(unsaferport)
+        if(result):
+            safereports += 1
+            #print(result, safereports)
 
     return safereports
            
