@@ -18,10 +18,30 @@ def getproduct(match: str) -> int:
     return product
 
 cumsum = 0
+items = []
+do_state = True
 for line in memory:
     print(line)
-    matches = re.findall(r"mul\([0-9]{1,3},[0-9]{1,3}\)", line)
-    print(matches)
+    matches = re.findall(r"(mul\([0-9]{1,3},[0-9]{1,3}\))?(don't)?(do)?", line)
+    #print(matches)
     for match in matches:
-        cumsum += getproduct(match)
-        print(cumsum)
+        for item in match:
+            if item == "":
+                continue
+            items.append(item)
+
+print(items)
+for item in items:
+    print(item)
+    if "don't" in item:
+        do_state = False
+        continue
+    if "do" in item:
+        do_state = True
+        continue
+
+    if do_state:
+        cumsum += getproduct(item)
+    
+    
+print(cumsum)
