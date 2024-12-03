@@ -2,7 +2,7 @@ import re
 
 #memorystring : str = ""
 memory = []
-with open('Day03/testdata.txt', 'r') as file:
+with open('Day03/fulldata.txt', 'r') as file:
     # Read each line from the file
     
     for line in file:
@@ -17,11 +17,11 @@ def getproduct(match: str) -> int:
     print(num1, num2, "product:", product)
     return product
 
+cumsum = 0
 for line in memory:
     print(line)
     matches = re.findall(r"mul\([0-9]{1,3},[0-9]{1,3}\)", line)
     print(matches)
-    cumsum = 0
     for match in matches:
         cumsum += getproduct(match)
         print(cumsum)
