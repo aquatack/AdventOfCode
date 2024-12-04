@@ -1,19 +1,10 @@
-ws_grid = []
+# %% 1
 
-with open('Day04/fulldata.txt', 'r') as file:
-    for line in file:
-        row = (line.strip())
-        ws_grid.append(row)
-
-# row, column indexing
-row_length = len(ws_grid[0])
-col_length = len(ws_grid)
-
-print("row length: ", row_length, "col length: ", col_length)
-print(ws_grid[0][3])
-
-
-def checker(grid, i, j):
+def checker(grid: list[str], i: int, j: int) -> int:
+    """Checks the given 2D array of characters at position i, j for the X-MAS pattern.
+     e.g:  M  .  S
+           .  A  .
+           M  .  S """
     if i < 1 or i >= len(grid[0]) - 1:
         return 0
     if j < 1 or j >= len(grid) - 1:
@@ -23,7 +14,8 @@ def checker(grid, i, j):
         return 0
 
     count = 0
-    # now check the four points (top left, top right, btm left, btm right)
+    # now check the four points (top left, top right, btm left, btm right).
+    # Each "MAS" can be reversed.
     valid_cases = [["M", "S", "M", "S"], ["S", "S", "M", "M"],
                    ["M", "M", "S", "S"], ["S", "M", "S", "M"]]
 
@@ -41,7 +33,9 @@ def checker(grid, i, j):
     return count
 
 
-def search_grid(grid):
+def search_grid(grid: list[str]) -> int:
+    """Iterates through the provided 2D array for the X-MAS pattern.
+    Returns an int representing the number of patterns found in the grid."""
     count = 0
     for i in range(len(grid[0])):
         for j in range(len(grid)):
@@ -49,4 +43,12 @@ def search_grid(grid):
     return count
 
 
+ws_grid = []
+
+with open('fulldata.txt', 'r', encoding='utf-8') as file:
+    for line in file:
+        row = line.strip()
+        ws_grid.append(row)
+
 print(search_grid(ws_grid))
+
