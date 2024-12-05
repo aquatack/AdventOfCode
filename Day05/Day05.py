@@ -36,14 +36,14 @@ def is_valid(page, prior_pages, rules) -> bool:
 
     rule = rules.get(page)
     if rule is None:
-        return True
+        return True, 0
 
-    for prior_page in prior_pages:
+    for i, prior_page in enumerate(prior_pages):
         for r in rule:
             if prior_page == r:
-                return False
+                return False, i
         
-    return True
+    return True, 0
 
 # # 75,47,61,53,29
 # print(is_valid(75,[], rules)) # true
@@ -59,15 +59,35 @@ def is_valid_update(update, rules):
     for i, element in enumerate(update):
         #print(element)
         #print(update[:i])
-        if not is_valid(element, update[:i], rules):
-            return False
-    return True
+        valid, conflict_i = is_valid(element, update[:i], rules)
+        if not valid:
+            return False, i, conflict_i, 
+    return True, 0, 0
 
 cumval = 0
+incorrect_updates = []
 for update in updates:
-    if is_valid_update(update, rules):
+    valid, i, conflict_i = is_valid_update(update, rules)
+    if valid:
         #print("valid: ", update, "index: ", int((len(update) - 1) / 2))
-
         cumval += update[int((len(update) - 1) / 2)]
+    else:
+        incorrect_updates.append(update)
 
 print("correctly ordered pages: ", cumval)
+
+cumval = 0
+for update in incorrect_updates:
+    valid = False
+    while not valid:
+        valid, i, conflict_i = is_valid_update(update, rules)
+        update[i], update[conflict_i] = update[conflict_i], update[i]
+        valid, i, conflict_i = is_valid_update(update, rules)
+        #print(element)
+        #print(update[:i])
+        #if not is_valid(element, update[:i], rules):
+        print(update, valid)
+    cumval += update[int((len(update) - 1) / 2)]
+        
+    
+print("newly valids: ", cumval)
