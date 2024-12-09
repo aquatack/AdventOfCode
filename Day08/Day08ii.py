@@ -24,11 +24,7 @@ def print_map(map, antinodes = None):
         for row in map:
             print("".join(row))
         
-room_map, antenna_positions = get_map("Day08/fulldata.txt")
-xmax = len(room_map[0])
-ymax = len(room_map)
-print_map(room_map)
-print(antenna_positions)
+
 
 def equation_of_a_straight_line(pos1, pos2):
     m: float = (pos2[0] - pos1[0]) / (pos2[1] - pos1[1])
@@ -47,10 +43,9 @@ def find_antenna_antinodes(positions, xmax, ymax):
                     if x < 0 or x >= xmax or y < 0 or y >= ymax:
                         continue
                     if y % 1 < 0.01: # to avoid float comparison error
-                        print(f"y: {y}, x: {x}")
+                        #print(f"y: {y}, x: {x}")
                         antinodes.add((int(y), int(x)))
-                    else:
-                        print(f"y: {y}, x: {x}, y%1: {y%1}")
+
                 
     return antinodes
 
@@ -61,8 +56,7 @@ def find_all_antinodes(antenna_positions, xmax, ymax):
 
     return antinodes
 
-antinodes = find_all_antinodes(antenna_positions, xmax, ymax)
-print("antindoes: ",antinodes)
+
 
 def find_unique_antinodes(antinodes):
     unique_antinodes = set()
@@ -70,6 +64,15 @@ def find_unique_antinodes(antinodes):
         for point in antinodes[ant]:
             unique_antinodes.add(point)
     return unique_antinodes
+
+room_map, antenna_positions = get_map("Day08/fulldata.txt")
+xmax = len(room_map[0])
+ymax = len(room_map)
+print_map(room_map)
+#print("antenna positions: ", antenna_positions)
+
+antinodes = find_all_antinodes(antenna_positions, xmax, ymax)
+#print("antindoes: ",antinodes)
 
 unique_antinodes = find_unique_antinodes(antinodes)
 print_map(room_map, unique_antinodes)
