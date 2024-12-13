@@ -31,20 +31,27 @@ def equation_of_a_straight_line(pos1, pos2):
     c: float = pos1[0] - m * pos1[1]
     return m, c
 
+def get_line_integers(pos1, pos2):
+    y_delta = (pos2[0] - pos1[0]) 
+    x_delta = (pos2[1] - pos1[1])
+    return x_delta, y_delta
+
 def find_antenna_antinodes(positions, xmax, ymax):
     antinodes = set()
     for i, ant1 in enumerate(positions):
         for j, ant2 in enumerate(positions):
             if i != j:
-                m, c = equation_of_a_straight_line(ant1, ant2)
-                for x in range(0, xmax):
-                    y: float = m * x + c
+                #m, c = equation_of_a_straight_line(ant1, ant2)
+                x_delta, y_delta = get_line_integers(ant1, ant2)
+                for k in range(-1*max(xmax, ymax), max(xmax,ymax)):
+                    
+                    x = ant1[1] + k*x_delta
+                    y = ant1[0] + k*y_delta
                     
                     if x < 0 or x >= xmax or y < 0 or y >= ymax:
                         continue
-                    if y % 1 < 0.01: # to avoid float comparison error
-                        #print(f"y: {y}, x: {x}")
-                        antinodes.add((int(y), int(x)))
+
+                    antinodes.add((int(y), int(x)))
 
                 
     return antinodes
