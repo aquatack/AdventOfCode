@@ -16,7 +16,7 @@ def load_file(file):
 def generate_operator_combinations(elements):
     n_ops = len(elements)-1
     # there will be 2^ combinations
-    operators = ["+","*"]
+    operators = ["+","*","||"]
     operations = list(itertools.product(operators, repeat = n_ops))
     #print(operations)
     
@@ -35,6 +35,8 @@ def apply_functions(elements, operators):
             cum_result += element
         if operators[i] == "*":
             cum_result *= element
+        if operators[i] == "||":
+            cum_result = int(str(cum_result) + str(element))
     
     return cum_result
 
@@ -53,6 +55,7 @@ for item in testdata:
         result = apply_functions(item["elements"], operator)
         if result == int(item["result"]):
             item["success"] = True
+            break
             
     #print(result)
     #
