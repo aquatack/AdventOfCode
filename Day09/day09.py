@@ -67,7 +67,7 @@ def compress(disk):
         compressed_disk[p_file_block] = temp
         p_next_free = find_next_free(compressed_disk)
         p_file_block = find_last_file_block(compressed_disk)
-        print_disk(compressed_disk)
+        #print_disk(compressed_disk)
         #print(compression_map.pop())
         
     return compressed_disk
@@ -86,7 +86,7 @@ def calc_checksum(disk_map):
     return checksum
 
 
-disk_map = get_map("Day09/testdata.txt")[0]
+disk_map = get_map("Day09/fulldata.txt")[0]
 disk = generate_disk(disk_map)
 print_disk(disk)
 compressed_disk = compress(disk)
